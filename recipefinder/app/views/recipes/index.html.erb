@@ -1,0 +1,40 @@
+<h1 class="mainTag">Food2Fork recipes search - <%= @search_term %></h1>
+<form class="search-bar">
+	<%= text_field_tag :search, params[:search], placeholder: "Press ENTER to search...",
+	:class => "search-field" %>
+</form>
+<!-- 
+	Check to see if @recipes is nil or an empty array
+	if it is, throw an error
+-->
+<% if (@recipes.nil? or @recipes == []) %>
+
+<p class="showError">No such search exists, try a different search.</p>
+
+<% else %>
+
+<table>
+	<tr>
+		<th>Thumbnail</th>
+		<th>Title</th>
+		<th>Social Rank</th>
+	</tr>
+	<% @recipes.each do |recipe| %>
+		<tr class=<%= cycle('even', 'odd') %>>
+			<!-- Display Image -->
+			<td><%= link_to(recipe['f2f_url'], :target => "_blank") do %>
+					<%= image_tag(recipe["image_url"]) %>
+				<% end %>		
+			</td>
+			<!-- Display Title -->
+			<td><%= link_to(recipe['f2f_url'], :target => "_blank") do %>
+					<%= sanitize(recipe["title"]) %>
+				<% end %>
+			</td>
+			<!-- Display Social Rank -->
+			<td><%= recipe["social_rank"] %></td>
+		</tr>
+	<% end %>
+</table>
+
+<% end %>
